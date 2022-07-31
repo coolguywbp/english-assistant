@@ -1,0 +1,53 @@
+responses:
+  - intent: greet
+    en: |
+      Hello!
+      Hi!
+    ru: |
+      Привет!
+      Здравствуй!
+  - intent: goodbye
+    en: |
+      Goodbye!
+    ru: |
+      Пока!
+  - intent: thanks
+    en: |
+      You are welcome!
+    ru: |
+      Рада помочь!
+      Это моя работа :)
+  - intent: mood_great
+    en: |
+      Yahoo!
+      I am happy to help you!
+    ru: |
+      Ура!
+      Всегда рада помочь!
+  - intent: bot_challenge
+    en: |
+      I am your English Assistant Bot!
+    ru: |
+      Я твой помощник в изучении английского языка!
+  - intent: joke
+    en: |
+      Why did the robot get upset? Because everyone was pushing his buttons!
+    ru: |
+      Российский робот-пылесос собрал в доме все ювелирные украшения, и уже через час был задержан сотрудниками полиции на ближайшем рынке при попытке сбыть краденное.
+  - intent: nlu_fallback
+    en: |
+      Can you rephrase your question please?
+    ru: |
+      Не понял, пожалуйста уточните вопрос
+actions:
+  - help
+  - new_call
+  - show_calls
+  - change_teacher
+  - show_plans
+  - wordpractice
+  - translate
+  - support
+  - day_off
+  - day_off_today
+  - day_off_tomorrow

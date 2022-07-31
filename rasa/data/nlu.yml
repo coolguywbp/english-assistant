@@ -1,0 +1,336 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - привет
+    - приветствую
+    - салют
+    - хай
+    - здравствуйте
+    - добрый день
+    - добрый вечер
+    - доброе утро
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - пока
+    - прощай
+    - до свидания
+    - увидимся
+    - бай
+    - спокойной ночи
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - ok
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - да
+    - правильно
+    - корректно
+    - конечно
+    - разумеется
+    - ес
+    - звучит хорошо
+    - хорошо
+    - ладно
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - нет
+    - не
+    - ноу
+    - никода
+    - не зачем
+    - не надо
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+    - отлично
+    - классно
+    - ура
+    - кайф
+    - супер
+    - круто
+    - замечательно
+    - у меня все хорошо
+    - чувствую себя отлично
+    - очень хорошо
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+    - плохо
+    - блин
+    - отстой
+    - не хорошо
+    - не очень
+    - не очень хорошо
+    - мрачно
+    - печально
+    - очень плохо
+    - так себе
+
+- intent: thanks
+  examples: |
+    - спасибо
+    - спасибо большое
+    - спасибо вам
+    - thanx
+    - thanks
+    - thank you
+
+- intent: joke
+  examples: |
+    - расскажи анекдот
+    - расскажи шутку
+    - tell me a joke
+    - do you know any jokes
+    
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - ты бот?
+    - кто ты?
+    - ты человек?
+    - ты живой?
+    - я говорю с человеком?
+    - я говорю с ботом?
+
+- intent: help
+  examples: |
+    - what can I do here?
+    - what you can?
+    - help me
+    - how can you help
+    - what can you do?
+    - what you do?
+    - what to do here?
+    - помогите
+    - что тут делать
+    - как быть
+    - что ты умеешь?
+    - как тобой пользоваться
+    - мне нужна помощь
+    - что мне делать?
+
+- intent: show_calls
+  examples: |
+    - уроки
+    - хочу посмотреть уроки
+    - посмотреть уроки
+    - покажи уроки
+    - мои уроки
+    - когда мне позвонят?
+    - расписание
+    - моё расписание
+    - когда у меня следующий урок?
+    - сколько звонков сегодня
+
+- intent: new_call/general
+  examples: |
+    - назначить звонок
+    - занятие
+    - урок
+    - новый урок
+    - когда можно позвонить
+    - как мне записаться на урок?
+    - хочу на урок
+    - как начать заниматься
+    - new call
+    - i want a lesson
+    - new lesson
+    - how to have a lesson
+    - how to get a call
+    - I want to have English lesson
+- intent: new_call/tomorrow
+  examples: |
+    - звонок завтра
+    - урок завтра
+    - завтра урок
+    - завтра
+- intent: new_call/day_after_tomorrow
+  examples: |
+    - звонок послезавтра
+    - урок послезавтра
+    - послезавтра урок
+    - послезавтра
+- intent: new_call/monday
+  examples: |
+    - понедельник
+    - урок в понедельник
+    - записаться на понедельник
+- intent: new_call/tuesday
+  examples: |
+    - вторник
+    - урок во вторник
+    - записаться на вторник
+- intent: new_call/wednesday
+  examples: |
+    - среда
+    - урок в среду
+    - записаться на среду
+- intent: new_call/thursday
+  examples: |
+    - четверг
+    - урок в четверг
+    - записаться на четверг
+- intent: new_call/friday
+  examples: |
+    - пятница
+    - урок в пятницу
+    - записаться на пятницу
+- intent: new_call/saturday
+  examples: |
+    - суббота
+    - урок в субботу
+    - записаться на субботу
+- intent: new_call/sunday
+  examples: |
+    - воскресенье
+    - урок в воскресенье
+    - записаться на воскресенье
+
+- intent: change_teacher
+  examples: |
+    - cменить учителя
+    - другой учитель
+    - я могу сменить учителя?
+    - поменять учителя
+    - change teacher
+    - i want another teacher
+    - another teacher
+    - how to change teacher
+
+- intent: show_plans
+  examples: |
+    - cколько стоит занятие?
+    - cколько длится урок?
+    - хочу оплатить
+    - я могу оплатить картой?
+    - how much does it costs
+    - how to pay
+    - can i pay with card
+
+- intent: wordpractice
+  examples: |
+    - повторить слова
+    - xочу повторить слова
+    - практика слов
+    - слова
+
+- intent: translate
+  examples: |
+    - как на английском
+    - как первести
+    - как переводится
+    - как будет на английском
+    - перевод
+
+- intent: support
+  examples: |
+    - мне не позвонил учитель
+    - как связаться с администратором
+    - у меня проблемы
+    - ничего не работает
+    - ничего не получается
+    - ничего не понимаю
+
+- intent: working_hours
+  examples: |
+    - настроить расписание
+    - настроить часы работы
+    - рабочее время
+    - изменить время работы
+    - выбрать рабочие часы
+    - выбрать выходные
+
+- intent: day_off
+  examples: |
+    - отменить уроки
+    - нужен выходной
+    - не хочу работать
+
+- intent: day_off_today
+  examples: |
+    - отменить все уроки на сегодня
+    - сегодня выходной
+    - я не успеваю на урок
+
+- intent: day_off_tomorrow
+  examples: |
+    - завтра я не работаю
+    - настроить часы работы
+    - завтра выходной
+    - завтра беру отгул
+
+- intent: stop_pending_today
+  examples: |
+    - больше не записывать ко мне сегодня
+    - сегодня не записывать
+    - на сегодня хватит записывать
+    - на сегодня больше не записывать

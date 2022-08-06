@@ -11,6 +11,7 @@ class Error(Exception):
 class UserIsNotCreated(Error):
     """Raised when User doesn't exist"""
     pass
+
 class Backend:
     """Backend abstraction layer"""
 
@@ -19,11 +20,11 @@ class Backend:
         self.logger = logging.getLogger('BACKEND')
         self.session = ClientSession()
 
-    # users
+    # Users
     async def create_user(self, telegram_id, telegram_username=None, first_name=None, last_name=None) -> None:
-        """Создает User, делает его учеником"""
+        """Создает User, делает его Student"""
         params = {'telegram_id': telegram_id, 'telegram_username': telegram_username, 'first_name': first_name, 'last_name': last_name}
-        async with self.session.post(self.host + f'users/', params=params) as response:
+        async with self.session.post(self.host + 'users/', params=params) as response:
             result = await response.json()
         return result
 
@@ -33,5 +34,19 @@ class Backend:
             result = await response.json()
             if response.status == 404 and result['message'] == "User doesn't exists":
                 raise UserIsNotCreated
-        self.logger.info(result['user_type'])
+        return result
+    
+    # Promotion/downgrading    
+    async def student_to_teacher(self, telegram_id) -> None:
+        """Student -> Teacher"""
+        params = {'telegram_id': telegram_id}
+        async with self.session.post(self.host + 'users/student_to_teacher/', params=params) as response:
+            result = await response.json()
+        return result
+    
+    async def teacher_to_student(self, telegram_id) -> None:
+        """Teacher -> Student"""
+        params = {'telegram_id': telegram_id}
+        async with self.session.post(self.host + 'users/teacher_to_student/', params=params) as response:
+            result = await response.json()
         return result

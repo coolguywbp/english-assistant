@@ -49,26 +49,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = models.User.objects.all()
     
-    def retrieve(self, request, pk=None):
-        """Получает юзеров, используя telegram_id"""
-        try:
-            user = models.User.objects.all().get(telegram_id=pk)
-        except models.User.DoesNotExist:
-            res = {"code": 404, "message": "User doesn't exists"}
-            return Response(data=res, status=status.HTTP_404_NOT_FOUND)
-        
-        if user.is_student:
-            student = models.StudentProfile.objects.all().get(user=user.pk)
-            serialized_student = StudentSerializer(student)
-            return Response(serialized_student.data)
-        elif user.is_teacher:
-            teacher = models.TeacherProfile.objects.all().get(user=user.pk)
-            serialized_teacher = TeacherSerializer(teacher)
-            return Response(serialized_teacher.data)
-        else:
-            admin = models.AdminProfile.objects.all().get(user=user.pk)
-            serialized_admin = AdminSerializer(admin)
-            return Response(serialized_admin.data)
     
     def create(self, request):
         """Создаёт нового User, делает его учеником и создаёт StudentProfile"""
@@ -98,9 +78,32 @@ class UserViewSet(viewsets.ModelViewSet):
             serialized_student = StudentSerializer(student)
             return Response(serialized_student.data)
     
+    
+    def retrieve(self, request, pk=None):
+        """Получает юзеров, используя telegram_id"""
+        try:
+            user = models.User.objects.all().get(telegram_id=pk)
+        except models.User.DoesNotExist:
+            res = {"code": 404, "message": "User doesn't exists"}
+            return Response(data=res, status=status.HTTP_404_NOT_FOUND)
+        
+        if user.is_student:
+            student = models.StudentProfile.objects.all().get(user=user.pk)
+            serialized_student = StudentSerializer(student)
+            return Response(serialized_student.data)
+        elif user.is_teacher:
+            teacher = models.TeacherProfile.objects.all().get(user=user.pk)
+            serialized_teacher = TeacherSerializer(teacher)
+            return Response(serialized_teacher.data)
+        else:
+            admin = models.AdminProfile.objects.all().get(user=user.pk)
+            serialized_admin = AdminSerializer(admin)
+            return Response(serialized_admin.data)
+    
+    
     @action(methods=['post'], detail=False)
-    def promote_student_to_teacher(self, request):
-        """Делает ученика учителем, удаляет Student Profile и создаёт Teacher Profile"""
+    def student_to_teacher(self, request):
+        """Делает Ученика Учителем, удаляет Student Profile и создаёт Teacher Profile"""
         telegram_id = request.query_params['telegram_id']
         user = models.User.objects.all().get(telegram_id=telegram_id)
         
@@ -113,6 +116,28 @@ class UserViewSet(viewsets.ModelViewSet):
 
             user.is_student = False
             user.is_teacher = True
+            user.save()            
+            
+            serialized_user = UserSerializer(user)
+            return Response(serialized_user.data)
+        else:
+            return HttpResponseNotFound()
+    
+    @action(methods=['post'], detail=False)
+    def teacher_to_student(self, request):
+        """Делает Учителя Учеником, удаляет Teacher Profile и создаёт Student Profile"""
+        telegram_id = request.query_params['telegram_id']
+        user = models.User.objects.all().get(telegram_id=telegram_id)
+        
+        if user.is_teacher:
+            profile = models.TeacherProfile.objects.all().get(user=user.pk)
+            profile.delete()
+            
+            profile = models.StudentProfile(user=user)
+            profile.save()
+
+            user.is_teacher = False
+            user.is_student = True
             user.save()            
             
             serialized_user = UserSerializer(user)

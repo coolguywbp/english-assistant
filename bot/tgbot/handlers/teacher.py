@@ -9,17 +9,17 @@ from tgbot.services.support import Support
 from tgbot.models.role import UserRole
 
 async def teacher_start(m: Message):
-    # await repo.add_user(m.from_user.id)
     await m.reply("Hello, teacher!")
 
 async def show_help(m: Message):
-    await m.answer("<b>HELP MESSAGE</b>")
+    await m.answer("<b>TEACHER HELP MESSAGE</b>")
 
 async def day_off(m: Message):
     await m.answer("<b>DAY OFF WIDGET</b>")
     
 def register_teacher(dp: Dispatcher):
     dp.register_message_handler(teacher_start, commands=["start"], state="*", chat_type='private', role=UserRole.TEACHER)
+    dp.register_message_handler(show_help, commands=["help"], state="*", chat_type='private', role=UserRole.TEACHER)
     dp.register_message_handler(show_help, intent="help", state="*", chat_type='private', role=UserRole.TEACHER)
     
     dp.register_message_handler(day_off, intent="day_off", state="*", chat_type='private', role=UserRole.TEACHER)

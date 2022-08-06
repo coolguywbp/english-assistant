@@ -1,5 +1,6 @@
 import sys
 sys.path.append('../')
+
 import os
 import asyncio
 import logging
@@ -40,12 +41,14 @@ def get_updates_in_use(dp: Dispatcher):
 logger = logging.getLogger(__name__)
 
 async def main():
+    # Logging
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
     logger.info("Starting bot")
     
+    # Storage
     if os.environ["use_redis"].lower() == 'true':
         storage = RedisStorage()
     else:
@@ -66,6 +69,7 @@ async def main():
     dp.middleware.setup(PaymentMiddleware(os.environ["payment_token"]))
     dp.middleware.setup(SupportMiddleware(os.environ["support_channel_id"], os.environ["signature"]))
 
+    # Filters
     dp.filters_factory.bind(RoleFilter)
     dp.filters_factory.bind(AdminFilter)
     dp.filters_factory.bind(IntentFilter)
@@ -77,7 +81,7 @@ async def main():
     register_common(dp)
     register_channel(dp)
     
-    # start bot
+    # Start
     try:
         await dp.start_polling(allowed_updates=get_updates_in_use(dp))
     finally:

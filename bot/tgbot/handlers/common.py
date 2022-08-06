@@ -13,7 +13,10 @@ async def translate(m: Message):
 
 # Fallbacks
 async def rasa_fallback(m: Message, nlu_data):
-    response = nlu_data['response']
+    try:
+        response = nlu_data['response']
+    except TypeError:
+        await m.answer('Command is not supported yet')                
     await m.answer(response)
 
 def register_common(dp: Dispatcher):

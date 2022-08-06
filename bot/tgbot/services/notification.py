@@ -2,7 +2,7 @@ import sys, time, logging, yaml, random
 from typing import List
 
 class Notification:
-    """Notification abstraction layer"""
+    """Notifications abstraction layer"""
 
     def __init__(self, bot, lobby_channel_id):
         self.bot = bot

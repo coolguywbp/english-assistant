@@ -26,7 +26,7 @@ class BackendMiddleware(LifetimeControllerMiddleware):
             if not text and obj.poll:
                 text = obj.poll.question
             
-            # Имитируем ввод текста
+            # Typing imitation
             await self.manager.bot.send_chat_action(telegram_id, action='TYPING')
         elif isinstance(obj, CallbackQuery):
             text = obj.data

@@ -1,9 +1,10 @@
 import sys, time, logging, yaml, random
 from typing import List
-
 import langid
 
 from aiohttp import ClientSession
+
+from tgbot.models.role import UserRole
 
 class Rasa:
     """Rasa abstraction layer"""
@@ -29,7 +30,7 @@ class Rasa:
         return intent['name']
 
 
-    async def get_data(self, user_id, text):
+    async def get_data(self, user_id, role, text):
         lang = self._detect_language(text)
         params = {'text': text}
         if self.debug:
@@ -43,11 +44,11 @@ class Rasa:
                 result = await response.json()
         intent = result['intent']
         result['response'] = await self._get_intent_response(intent['name'], lang)
-        if self.log_to_channel: await self._log_to_training_channel(user_id, text, intent['name'], result['response'])
+        if self.log_to_channel: await self._log_to_training_channel(user_id, role.name, text, intent['name'], result['response'])
         return result
 
-    async def _log_to_training_channel(self, user_id, text, intent, response):
-        log = f'<a href="tg://user?id={user_id}">{user_id}</a>\n\n<b>User:</b> {text}\n<b>Rasa:</b> {response}\n\nIntent: <code>{intent}</code>'
+    async def _log_to_training_channel(self, user_id, role, text, intent, response):
+        log = f'<b>{role.title()}</b> <a href="tg://user?id={user_id}">{user_id}</a>\n\n<b>User:</b> {text}\n<b>Rasa:</b> {response}\n\nIntent: <code>{intent}</code>'
         await self.bot.send_message(self.log_channel_id, log)
     
     async def _get_intent_response(self, intent, lang):

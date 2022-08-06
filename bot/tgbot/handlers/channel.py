@@ -18,7 +18,6 @@ async def handle_lobby_member(chat_member: ChatMemberUpdated, notification: Noti
         elif chat_member.new_chat_member.status == 'left' or chat_member.new_chat_member.status == 'kicked':
             await backend.teacher_to_student(chat_member.new_chat_member.user.id)
             await notification.teacher_downgraded_to_student(chat_member.new_chat_member.user)
-        logger.info(chat_member.new_chat_member.status)
 
 def register_channel(dp: Dispatcher):
     # Teachers Lobby

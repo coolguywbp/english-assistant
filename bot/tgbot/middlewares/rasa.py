@@ -1,3 +1,4 @@
+import logging
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 from aiogram.types import CallbackQuery, Message
 
@@ -7,6 +8,7 @@ class RasaMiddleware(LifetimeControllerMiddleware):
     def __init__(self, rasa):
         super().__init__()
         self.rasa = rasa
+        self.logger = logging.getLogger('RASA_MIDDLEWARE')
 
     async def pre_process(self, obj, data, *args):
         if isinstance(obj, Message):
@@ -17,10 +19,14 @@ class RasaMiddleware(LifetimeControllerMiddleware):
         elif isinstance(obj, CallbackQuery):
             text = obj.data
             user_id = obj.chat.id
-        if (obj.chat.type == 'private'):
-            nlu_data = await self.rasa.get_data(user_id, text)
+            
+        data["nlu_data"] = None
+        data["intent"] = None
+        
+        """Getting Rasa data with every text message (only in private chat and not commands)"""
+        if (obj.chat.type == 'private' and obj.entities[0].type != 'bot_command'):
+            nlu_data = await self.rasa.get_data(user_id, data['role'], text)
             intent = nlu_data['intent']
-            # data["rasa"] = self.rasa
             data["nlu_data"] = nlu_data
             data["intent"] = intent['name']
 

@@ -60,6 +60,7 @@ async def got_payment(m: Message):
 
 def register_student(dp: Dispatcher):
     dp.register_message_handler(student_start, commands=["start"], state="*", chat_type='private', role=UserRole.STUDENT)
+    dp.register_message_handler(student_help, commands=["help"], state="*", chat_type='private', role=UserRole.STUDENT)
     dp.register_message_handler(student_help, intent="help", state="*", chat_type='private', role=UserRole.STUDENT)
     # Calls handlers
     dp.register_message_handler(new_call, intent="new_call", state="*", chat_type='private', role=UserRole.STUDENT)

@@ -21,15 +21,15 @@ class Backend:
         self.session = ClientSession()
 
     # Users
-    async def create_user(self, telegram_id, telegram_username=None, first_name=None, last_name=None) -> None:
-        """Создает User, делает его Student"""
+    async def create_user(self, telegram_id, telegram_username=None, first_name=None, last_name=None):
+        """Create User, make him a Student"""
         params = {'telegram_id': telegram_id, 'telegram_username': telegram_username, 'first_name': first_name, 'last_name': last_name}
         async with self.session.post(self.host + 'users/', params=params) as response:
             result = await response.json()
         return result
 
-    async def get_user(self, telegram_id) -> List[int]:
-        """Получает User по telegram_id"""
+    async def get_user(self, telegram_id):
+        """Get User via telegram_id"""
         async with self.session.get(self.host + f'users/{str(telegram_id)}/') as response:
             result = await response.json()
             if response.status == 404 and result['message'] == "User doesn't exists":

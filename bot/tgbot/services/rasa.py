@@ -15,6 +15,7 @@ class Rasa:
         self.nlu_server = "http://172.17.0.1:5005/model/parse" if 'docker' in sys.argv[1:] else "http://localhost:5005/model/parse"
         
         self.debug = True if 'rasa-debug' in sys.argv[1:] else False
+        self.log_to_channel = True
         self.log_channel_id = log_channel_id
 
         with open('tgbot/services/responses.yml', 'r', encoding='utf-8') as stream:
@@ -42,7 +43,7 @@ class Rasa:
                 result = await response.json()
         intent = result['intent']
         result['response'] = await self._get_intent_response(intent['name'], lang)
-        await self._log_to_training_channel(user_id, text, intent['name'], result['response'])
+        if self.log_to_channel: await self._log_to_training_channel(user_id, text, intent['name'], result['response'])
         return result
 
     async def _log_to_training_channel(self, user_id, text, intent, response):

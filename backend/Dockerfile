@@ -1,6 +1,8 @@
-FROM python:3.9 
+FROM python:3.9
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 WORKDIR /backend
-COPY ./app ./backend/app 
+COPY ./app ./app 
 COPY ./requirements.txt /backend/requirements.txt 
+COPY ./manage.py /backend/manage.py 
 RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt 
-#CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]

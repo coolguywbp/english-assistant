@@ -19,4 +19,4 @@ ENTRYPOINT ["rasa"]
 
 
 # command to run when container is called to run
-CMD ["run", "-m", "/app/models", "--cors", "*", "--enable-api"]
+CMD ["run", "-m", "/app/models", "--enable-api"]

@@ -11,21 +11,21 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage
 from tgbot.config import load_config
 from tgbot.filters.role import RoleFilter, AdminFilter
 from tgbot.filters.intent import IntentFilter
-from tgbot.handlers.admin import register_admin
-from tgbot.handlers.user import register_user
 
-from tgbot.middlewares.db import DbMiddleware
-from tgbot.middlewares.role import RoleMiddleware
+from tgbot.handlers.admin import register_admin
+from tgbot.handlers.student import register_student
+from tgbot.handlers.teacher import register_teacher
+from tgbot.handlers.common import register_common
+
+from tgbot.middlewares.backend import BackendMiddleware
 from tgbot.middlewares.payment import PaymentMiddleware
 from tgbot.middlewares.rasa import RasaMiddleware
 from tgbot.middlewares.support import SupportMiddleware
 
 from tgbot.services.rasa import Rasa
+from tgbot.services.backend import Backend
 
 logger = logging.getLogger(__name__)
-
-def create_pool(user, password, database, host, echo):
-    raise NotImplementedError  # TODO check your db connector
 
 async def main():
     logging.basicConfig(
@@ -41,12 +41,13 @@ async def main():
 
     bot = Bot(token=os.environ["token"], parse_mode=types.ParseMode.HTML)
     dp = Dispatcher(bot, storage=storage)
+    
     rasa = Rasa(bot, os.environ["log_channel_id"])
+    backend = Backend(os.environ["backend_host"])
 
-    # dp.middleware.setup(DbMiddleware(pool))
-    dp.middleware.setup(RoleMiddleware(os.environ["admin_id"]))
-    dp.middleware.setup(PaymentMiddleware(os.environ["payment_token"]))
+    dp.middleware.setup(BackendMiddleware(backend))
     dp.middleware.setup(RasaMiddleware(rasa))
+    dp.middleware.setup(PaymentMiddleware(os.environ["payment_token"]))
     dp.middleware.setup(SupportMiddleware(os.environ["support_channel_id"], os.environ["signature"]))
 
     dp.filters_factory.bind(RoleFilter)
@@ -54,7 +55,9 @@ async def main():
     dp.filters_factory.bind(IntentFilter)
 
     register_admin(dp)
-    register_user(dp)
+    register_teacher(dp)
+    register_student(dp)
+    register_common(dp)
 
     # start bot
     try:

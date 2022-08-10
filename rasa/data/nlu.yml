@@ -41,39 +41,6 @@ nlu:
     - увидимся
     - бай
     - спокойной ночи
-- intent: affirm
-  examples: |
-    - 'yes'
-    - y
-    - ok
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-    - да
-    - правильно
-    - корректно
-    - конечно
-    - разумеется
-    - ес
-    - звучит хорошо
-    - хорошо
-    - ладно
-- intent: deny
-  examples: |
-    - 'no'
-    - n
-    - never
-    - I dont think so
-    - dont like that
-    - no way
-    - not really
-    - нет
-    - не
-    - ноу
-    - никода
-    - не зачем
-    - не надо
 - intent: mood_great
   examples: |
     - perfect
@@ -252,3 +219,37 @@ nlu:
     - сегодня не записывать
     - на сегодня хватит записывать
     - на сегодня больше не записывать
+- intent: affirm
+  examples: |
+    - 'yes'
+    - y
+    - ok
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - да
+    - правильно
+    - корректно
+    - конечно
+    - разумеется
+    - всё верно
+    - ес
+    - звучит хорошо
+    - хорошо
+    - ладно
+- intent: deny
+  examples: |
+    - 'no'
+    - n
+    - never
+    - I dont think so
+    - dont like that
+    - no way
+    - not really
+    - нет
+    - не
+    - ноу
+    - никогда
+    - не зачем
+    - не надо

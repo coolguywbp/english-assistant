@@ -1,4 +1,5 @@
-import os
+import os, json
+import requests
 from django.contrib import admin
 from django_object_actions import DjangoObjectActions
 
@@ -8,15 +9,15 @@ class IntentAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ['intent', 'examples']
     list_editable = ['examples']
     
-    def train_rasa(self, request, obj):
-        print('Trining')
-        print(os.path.dirname(os.path.abspath(__file__)))
-        print(os.listdir('../rasa/data'))
+    def rebuild_rasa(self, request, obj):
+        print('Sending requiest to rebuild Rasa')
+        response = requests.get('http://172.17.0.1:9000/rebuild_rasa')
+        return response.content
 
-    train_rasa.label = 'Train Rasa'
-    train_rasa.short_description  = 'Press to train new model'
+    rebuild_rasa.label = 'Rebuild Rasa'
+    rebuild_rasa.short_description  = 'Press to train new model'
 
-    changelist_actions  = ('train_rasa', )
+    changelist_actions  = ('rebuild_rasa', )
 
 admin.site.register(models.Intent, IntentAdmin)
 

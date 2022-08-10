@@ -1,9 +1,9 @@
 import subprocess, yaml, json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from http.client import HTTPConnection
-"""Микро-сервис, запущенный без docker. Используется для перезагрузки настройки и перзагрузки сервисов."""
+"""Микро-сервис, запущенный без docker. Используется для настройки и перезагрузки сервисов."""
 
-hostName = "localhost"
+hostName = "172.17.0.1"
 serverPort = 9000
 
 backend_url = "localhost:8000"
@@ -25,9 +25,6 @@ def create_nlu_yml(intents_data):
     return intents_dict
 
 class MyServer(BaseHTTPRequestHandler):
-    def __init__(self, process, *args):
-        self.process = process
-        BaseHTTPRequestHandler.__init__(self, *args)
     def do_GET(self):
         if self.path == '/rebuild_rasa':
             
@@ -43,34 +40,27 @@ class MyServer(BaseHTTPRequestHandler):
             intents_dict = create_nlu_yml(intents_data)
             with open('./rasa/data/nlu.yml', 'w') as yaml_file:
                 yaml.dump(intents_dict, yaml_file, allow_unicode=True, default_flow_style=False, sort_keys=False)
-            # os.system("docker-compose up --build --force-recreate --no-deps rasa")
-            # os.popen("docker-compose up --build --force-recreate --no-deps rasa")
-            # self.process
+            subprocess.Popen(['docker-compose', 'up', '--build', '--force-recreate', '--no-deps', '-d', 'rasa'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             
-            self.send_response(code=200, message='Success')
+            self.send_response(code=200, message='Rasa rebuild started')
             self.send_header(keyword='Content-type', value='application/json')
             self.end_headers()
+            self.wfile.write(json.dumps({'code': '200', 'text': 'Rasa rebuild started'}).encode('utf-8'))
         else:
             self.send_response(code=404, message="Path doesn't exist")
             self.send_header(keyword='Content-type', value='application/json')
             self.end_headers()
+            self.wfile.write(json.dumps({'code': '200', 'text': "Path doesn't exist"}).encode('utf-8'))
 
 if __name__ == "__main__":        
-   
-    process = subprocess.Popen(['docker-compose', 'up', '--build'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    while process.poll() is None:
-        print(process.stdout.readline().decode(encoding="utf-8"))
-    
-    webServer = HTTPServer((hostName, serverPort), MyServer(process))
+    webServer = HTTPServer((hostName, serverPort), MyServer)
     print(f"Docker Controller started http://{hostName}:{serverPort}")
-    
+ 
     try:
         webServer.serve_forever()
-        # os.popen('docker-compose up --build')        
-    except KeyboardInterrupt:        
-        process.stdout.close()
+    except KeyboardInterrupt:
         pass
-    
+ 
     webServer.server_close()
     print("Docker Controller stopped.")
     

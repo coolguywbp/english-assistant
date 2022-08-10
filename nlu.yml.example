@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 nlu:
 - intent: greet
   examples: |
@@ -10,7 +10,7 @@ nlu:
     - good evening
     - moin
     - hey there
-    - lets go
+    - let's go
     - hey dude
     - goodmorning
     - goodevening
@@ -23,6 +23,7 @@ nlu:
     - добрый день
     - добрый вечер
     - доброе утро
+
 - intent: goodbye
   examples: |
     - cu
@@ -41,9 +42,10 @@ nlu:
     - увидимся
     - бай
     - спокойной ночи
+
 - intent: affirm
   examples: |
-    - 'yes'
+    - yes
     - y
     - ok
     - indeed
@@ -59,13 +61,14 @@ nlu:
     - звучит хорошо
     - хорошо
     - ладно
+
 - intent: deny
   examples: |
-    - 'no'
+    - no
     - n
     - never
-    - I dont think so
-    - dont like that
+    - I don't think so
+    - don't like that
     - no way
     - not really
     - нет
@@ -74,6 +77,7 @@ nlu:
     - никода
     - не зачем
     - не надо
+
 - intent: mood_great
   examples: |
     - perfect
@@ -100,14 +104,15 @@ nlu:
     - у меня все хорошо
     - чувствую себя отлично
     - очень хорошо
+
 - intent: mood_unhappy
   examples: |
     - my day was horrible
     - I am sad
-    - I dont feel very well
+    - I don't feel very well
     - I am disappointed
     - super sad
-    - Im so sad
+    - I'm so sad
     - sad
     - very sad
     - unhappy
@@ -126,6 +131,7 @@ nlu:
     - печально
     - очень плохо
     - так себе
+
 - intent: thanks
   examples: |
     - спасибо
@@ -134,12 +140,14 @@ nlu:
     - thanx
     - thanks
     - thank you
+
 - intent: joke
   examples: |
     - расскажи анекдот
     - расскажи шутку
     - tell me a joke
     - do you know any jokes
+    
 - intent: bot_challenge
   examples: |
     - are you a bot?
@@ -152,6 +160,7 @@ nlu:
     - ты живой?
     - я говорю с человеком?
     - я говорю с ботом?
+
 - intent: help
   examples: |
     - what can I do here?
@@ -168,6 +177,7 @@ nlu:
     - как тобой пользоваться
     - мне нужна помощь
     - что мне делать?
+
 - intent: show_calls
   examples: |
     - уроки
@@ -180,6 +190,71 @@ nlu:
     - моё расписание
     - когда у меня следующий урок?
     - сколько звонков сегодня
+
+- intent: new_call/general
+  examples: |
+    - назначить звонок
+    - занятие
+    - урок
+    - новый урок
+    - когда можно позвонить
+    - как мне записаться на урок?
+    - хочу на урок
+    - как начать заниматься
+    - new call
+    - i want a lesson
+    - new lesson
+    - how to have a lesson
+    - how to get a call
+    - I want to have English lesson
+- intent: new_call/tomorrow
+  examples: |
+    - звонок завтра
+    - урок завтра
+    - завтра урок
+    - завтра
+- intent: new_call/day_after_tomorrow
+  examples: |
+    - звонок послезавтра
+    - урок послезавтра
+    - послезавтра урок
+    - послезавтра
+- intent: new_call/monday
+  examples: |
+    - понедельник
+    - урок в понедельник
+    - записаться на понедельник
+- intent: new_call/tuesday
+  examples: |
+    - вторник
+    - урок во вторник
+    - записаться на вторник
+- intent: new_call/wednesday
+  examples: |
+    - среда
+    - урок в среду
+    - записаться на среду
+- intent: new_call/thursday
+  examples: |
+    - четверг
+    - урок в четверг
+    - записаться на четверг
+- intent: new_call/friday
+  examples: |
+    - пятница
+    - урок в пятницу
+    - записаться на пятницу
+- intent: new_call/saturday
+  examples: |
+    - суббота
+    - урок в субботу
+    - записаться на субботу
+- intent: new_call/sunday
+  examples: |
+    - воскресенье
+    - урок в воскресенье
+    - записаться на воскресенье
+
 - intent: change_teacher
   examples: |
     - cменить учителя
@@ -190,6 +265,7 @@ nlu:
     - i want another teacher
     - another teacher
     - how to change teacher
+
 - intent: show_plans
   examples: |
     - cколько стоит занятие?
@@ -199,12 +275,14 @@ nlu:
     - how much does it costs
     - how to pay
     - can i pay with card
+
 - intent: wordpractice
   examples: |
     - повторить слова
     - xочу повторить слова
     - практика слов
     - слова
+
 - intent: translate
   examples: |
     - как на английском
@@ -214,6 +292,7 @@ nlu:
     - перевод
     - переведи
     - переведи
+
 - intent: support
   examples: |
     - мне не позвонил учитель
@@ -222,6 +301,7 @@ nlu:
     - ничего не работает
     - ничего не получается
     - ничего не понимаю
+
 - intent: working_hours
   examples: |
     - настроить расписание
@@ -230,22 +310,26 @@ nlu:
     - изменить время работы
     - выбрать рабочие часы
     - выбрать выходные
+
 - intent: day_off
   examples: |
     - отменить уроки
     - нужен выходной
     - не хочу работать
+
 - intent: day_off_today
   examples: |
     - отменить все уроки на сегодня
     - сегодня выходной
     - я не успеваю на урок
+
 - intent: day_off_tomorrow
   examples: |
     - завтра я не работаю
     - настроить часы работы
     - завтра выходной
     - завтра беру отгул
+
 - intent: stop_pending_today
   examples: |
     - больше не записывать ко мне сегодня

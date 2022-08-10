@@ -16,6 +16,7 @@ async def answer_issue(m: Message, support: Support):
     pass
 
 def register_admin(dp: Dispatcher):
+    """Handlers for Admins"""
     dp.register_message_handler(admin_start, commands=["start"], state="*", role=UserRole.ADMIN)
     dp.register_message_handler(show_help, commands=["help"], state="*", chat_type='private', role=UserRole.ADMIN)
     dp.register_message_handler(show_help, intent="help", state="*", chat_type='private', role=UserRole.ADMIN)

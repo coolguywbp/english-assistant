@@ -59,6 +59,7 @@ async def got_payment(m: Message):
     await m.reply("У нас твои {amount}{currency}!".format(amount=m.successful_payment.total_amount / 100, currency=m.successful_payment.currency))
 
 def register_student(dp: Dispatcher):
+    """Handlers for Students"""
     dp.register_message_handler(student_start, commands=["start"], state="*", chat_type='private', role=UserRole.STUDENT)
     dp.register_message_handler(student_help, commands=["help"], state="*", chat_type='private', role=UserRole.STUDENT)
     dp.register_message_handler(student_help, intent="help", state="*", chat_type='private', role=UserRole.STUDENT)

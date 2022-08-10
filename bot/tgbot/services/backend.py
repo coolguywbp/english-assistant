@@ -50,3 +50,12 @@ class Backend:
         async with self.session.post(self.host + 'users/teacher_to_student/', params=params) as response:
             result = await response.json()
         return result
+    
+    # Logs
+    
+    async def save_chatlog(self, telegram_id, action, content) -> None:
+        """Save chatlog"""
+        params = {'user': telegram_id, 'action': action, 'content': content}
+        async with self.session.post(self.host + 'chatlogs/', json=params) as response:
+            result = await response.json()
+        return result

@@ -1,7 +1,5 @@
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
-
 from tgbot.services.payment import Payment
-
 
 class PaymentMiddleware(LifetimeControllerMiddleware):
     skip_patterns = ["error", "update"]

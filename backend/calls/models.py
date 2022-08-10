@@ -8,7 +8,9 @@ class Call(models.Model):
     # Dates
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    date_time = models.DateTimeField(verbose_name="Дата и время", default=datetime.now, blank=True)
+    start_datetime = models.DateTimeField(verbose_name="Дата начала", default="1900-01-01 12:00:00Z", blank=False)
+    finish_datetime = models.DateTimeField(verbose_name="Дата конца", default="1900-01-01 12:00:00Z", blank=False)
+    duration = models.IntegerField(verbose_name="Длительность в минутах", default=30, blank=False)
     
     # Users
     student = models.OneToOneField(StudentProfile, verbose_name=("Ученик"), on_delete=models.CASCADE, primary_key=True)

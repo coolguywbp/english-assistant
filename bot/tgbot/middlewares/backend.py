@@ -33,15 +33,20 @@ class BackendMiddleware(LifetimeControllerMiddleware):
             telegram_id = obj.chat.id
             
         data["role"] = None
+        data["user"] = None
         data["backend"] = self.backend
         
-        # Setting up Role in private chat
+        """Getting User and setting up Role in private chat"""
         if (obj.chat.type == 'private'):
             try:
                 user = await self.backend.get_user(telegram_id)
             except UserIsNotCreated:
-                """If user is not created, create new student account"""
+                """If user is not created, create new student account (yes, inside middleware)"""
                 user = await self.backend.create_user(telegram_id, telegram_username=telegram_username, first_name=first_name, last_name=last_name)
+            
+            # Saving chatlog
+            await self.backend.save_chatlog(telegram_id, 'message', text)
+            data["user"] = user
             
             if not getattr(obj, "from_user", None):
                 data["role"] = None
@@ -51,9 +56,8 @@ class BackendMiddleware(LifetimeControllerMiddleware):
                 data["role"] = UserRole.TEACHER
             elif user['user_type'] == 'student':
                 data["role"] = UserRole.STUDENT
-            
-        # self.logger.info(isinstance(obj, ChatMemberUpdated))
         
     async def post_process(self, obj, data, *args):
         del data["role"]
         del data["backend"]
+        del data["user"]

@@ -11,6 +11,7 @@ logger = logging.getLogger('CHANNEL_HANDLERS')
 
 # Teachers Lobby
 async def handle_lobby_member(chat_member: ChatMemberUpdated, notification: Notification, backend: Backend):
+    """Handles User Lobby Student/Teacher convertations"""
     if chat_member.chat.type == 'channel' and chat_member.chat.id == LOBBY_CHANNEL_ID:
         if chat_member.new_chat_member.status == 'member':
             await backend.student_to_teacher(chat_member.new_chat_member.user.id)
@@ -20,5 +21,6 @@ async def handle_lobby_member(chat_member: ChatMemberUpdated, notification: Noti
             await notification.teacher_downgraded_to_student(chat_member.new_chat_member.user)
 
 def register_channel(dp: Dispatcher):
+    """Handlers for channels"""
     # Teachers Lobby
     dp.register_chat_member_handler(handle_lobby_member)

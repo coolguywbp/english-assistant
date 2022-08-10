@@ -13,10 +13,8 @@ VOLUME /app
 VOLUME /app/data
 VOLUME /app/models
 
-
+RUN python --version
 # set entrypoint for interactive shells
 ENTRYPOINT ["rasa"]
-
-
 # command to run when container is called to run
 CMD ["run", "-m", "/app/models", "--enable-api"]

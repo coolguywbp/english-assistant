@@ -60,7 +60,7 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             user = models.User.objects.all().get(telegram_id=telegram_id)
             res = {"code": 400, "message": "User already exists"}
-            return Response(data=json.dumps(res), status=status.HTTP_200_OK)
+            return Response(res, status=status.HTTP_200_OK)
         except models.User.DoesNotExist:        
             user = models.User(
                 telegram_id = telegram_id,

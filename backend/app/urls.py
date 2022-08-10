@@ -19,10 +19,13 @@ from rest_framework import routers
 
 from users import views as users_views
 from calls import views as calls_views
+from responses import views as responses_views
 
 router = routers.DefaultRouter()
 router.register(r'users', users_views.UserViewSet)
 router.register(r'calls', calls_views.CallViewSet)
+router.register(r'chatlogs', responses_views.ChatlogViewSet)
+router.register(r'intents', responses_views.IntentViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

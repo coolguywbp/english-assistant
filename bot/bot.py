@@ -64,10 +64,10 @@ async def main():
     
     # Middlewares
     dp.middleware.setup(BackendMiddleware(backend))
-    dp.middleware.setup(RasaMiddleware(rasa))
     dp.middleware.setup(NotificationMiddleware(notification))
     dp.middleware.setup(PaymentMiddleware(os.environ["payment_token"]))
     dp.middleware.setup(SupportMiddleware(os.environ["support_channel_id"], os.environ["signature"]))
+    dp.middleware.setup(RasaMiddleware(rasa))
 
     # Filters
     dp.filters_factory.bind(RoleFilter)

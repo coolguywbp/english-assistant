@@ -23,8 +23,9 @@ class RasaMiddleware(LifetimeControllerMiddleware):
         data["nlu_data"] = None
         data["intent"] = None
         
+        self.logger.info(obj)
         """Getting Rasa data with every text message (only in private chat and not commands)"""
-        if (obj.chat.type == 'private' and obj.entities[0].type != 'bot_command'):
+        if (obj.chat.type == 'private' and "entities" not in obj):
             nlu_data = await self.rasa.get_data(user_id, data['role'], text)
             intent = nlu_data['intent']
             data["nlu_data"] = nlu_data

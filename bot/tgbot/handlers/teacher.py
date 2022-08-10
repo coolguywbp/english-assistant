@@ -18,6 +18,7 @@ async def day_off(m: Message):
     await m.answer("<b>DAY OFF WIDGET</b>")
     
 def register_teacher(dp: Dispatcher):
+    """Handlers for Teachers"""
     dp.register_message_handler(teacher_start, commands=["start"], state="*", chat_type='private', role=UserRole.TEACHER)
     dp.register_message_handler(show_help, commands=["help"], state="*", chat_type='private', role=UserRole.TEACHER)
     dp.register_message_handler(show_help, intent="help", state="*", chat_type='private', role=UserRole.TEACHER)

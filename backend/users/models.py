@@ -109,6 +109,7 @@ class StudentProfile(models.Model):
     user_type = models.CharField(default='student', editable=False, max_length=7)
     last_call = models.DateTimeField(verbose_name="Последний звонок", default="1900-01-01 12:00:00Z")
     teachers = models.ForeignKey(TeacherProfile, verbose_name=("Выбранные учителя"), on_delete=models.CASCADE, null=True, blank=True)
+    call_duration = models.IntegerField(verbose_name="Длительность звонка", default=30, blank=False)
     class Meta:
         verbose_name_plural = "Students"
         ordering = ('last_call',)

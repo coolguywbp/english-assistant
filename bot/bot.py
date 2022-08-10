@@ -58,8 +58,8 @@ async def main():
     dp = Dispatcher(bot, storage=storage)
     
     # Services
-    rasa = Rasa(bot, os.environ["log_channel_id"])
     backend = Backend(os.environ["backend_host"])
+    rasa = Rasa(bot, backend, os.environ["log_channel_id"])
     notification = Notification(bot, os.environ["lobby_channel_id"])
     
     # Middlewares

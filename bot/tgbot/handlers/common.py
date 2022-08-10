@@ -2,18 +2,20 @@ from aiogram import Dispatcher
 from aiogram.types import Message
 
 from tgbot.models.role import UserRole
+from tgbot.services.backend import Backend
 
 # Dictionary handlers
 async def translate(m: Message):
     await m.answer("<b>TRANSLATE WIDGET</b>")
 
 # Fallbacks
-async def rasa_fallback(m: Message, nlu_data):
+async def rasa_fallback(m: Message, backend: Backend, nlu_data):
     try:
         response = nlu_data['response']
     except TypeError:
         await m.answer('Command is not supported yet')
-        return            
+        return
+    await backend.save_chatlog(m.from_user.id, 'response', response)
     await m.answer(response)
 
 def register_common(dp: Dispatcher):

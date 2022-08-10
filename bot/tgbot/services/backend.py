@@ -12,6 +12,14 @@ class UserIsNotCreated(Error):
     """Raised when User doesn't exist"""
     pass
 
+class ResponseIsNotCreated(Error):
+    """Raised when User doesn't exist"""
+    pass
+
+class IntentIsNotCreated(Error):
+    """Raised when User doesn't exist"""
+    pass
+
 class Backend:
     """Backend abstraction layer"""
 
@@ -58,4 +66,17 @@ class Backend:
         params = {'user': telegram_id, 'action': action, 'content': content}
         async with self.session.post(self.host + 'chatlogs/', json=params) as response:
             result = await response.json()
+        return result
+
+    # Responses
+    
+    async def get_response(self, intent):
+        """Get Response via Intent"""
+        async with self.session.get(self.host + f'response/{intent}/') as response:
+            result = await response.json()
+            if response.status == 404:
+                if result['message'] == "Response doesn't exist":
+                    raise ResponseIsNotCreated
+                elif result['message'] == "Intent doesn't exist":
+                    raise IntentIsNotCreated                    
         return result

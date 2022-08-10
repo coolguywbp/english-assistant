@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class Intent(models.Model):
     intent = models.CharField(verbose_name="Интент", max_length=100)
-    examples = models.TextField(verbose_name="Примеры")
+    examples = models.TextField(verbose_name="Примеры", blank=True)
 
     def __str__(self):
         return self.intent

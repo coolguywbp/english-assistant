@@ -1,4 +1,4 @@
-import subprocess, yaml, json
+import subprocess, yaml, json, logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from http.client import HTTPConnection
 """Микро-сервис, запущенный без docker. Используется для настройки и перезагрузки сервисов."""
@@ -7,6 +7,8 @@ hostName = "172.17.0.1"
 serverPort = 9000
 
 backend_url = "localhost:8000"
+
+logger = logging.getLogger(__name__)
 
 class AsLiteral(str):
   pass
@@ -19,6 +21,7 @@ def create_nlu_yml(intents_data):
     intents_dict = {'version': '3.1', 'nlu': []}
     yaml.add_representer(AsLiteral, represent_literal)
     for item in intents_data:
+        if item['examples'] == '': continue
         examples = item['examples'].replace("'", '').replace("- ", '').split('\r\n')
         examples_str = AsLiteral(yaml.dump(examples, allow_unicode=True))
         intents_dict['nlu'].append({'intent': item['intent'], 'examples': examples_str})
@@ -40,6 +43,7 @@ class MyServer(BaseHTTPRequestHandler):
             intents_dict = create_nlu_yml(intents_data)
             with open('./rasa/data/nlu.yml', 'w') as yaml_file:
                 yaml.dump(intents_dict, yaml_file, allow_unicode=True, default_flow_style=False, sort_keys=False)
+                
             subprocess.Popen(['docker-compose', 'up', '--build', '--force-recreate', '--no-deps', '-d', 'rasa'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             
             self.send_response(code=200, message='Rasa rebuild started')

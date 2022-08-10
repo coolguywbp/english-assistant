@@ -5,11 +5,13 @@ import langid
 from aiohttp import ClientSession
 
 from tgbot.models.role import UserRole
+from tgbot.services.backend import ResponseIsNotCreated
 
 class Rasa:
     """Rasa abstraction layer"""
-    def __init__(self, bot, log_channel_id):
+    def __init__(self, bot, backend, log_channel_id):
         self.bot = bot
+        self.backend = backend
         self.logger = logging.getLogger('RASA')
 
         self.session = ClientSession()        
@@ -46,7 +48,7 @@ class Rasa:
         result['response'] = await self._get_intent_response(intent['name'], lang)
         if self.log_to_channel: await self._log_to_training_channel(user_id, role.name, text, intent['name'], result['response'])
         return result
-
+    
     async def _log_to_training_channel(self, user_id, role, text, intent, response):
         log = f'<b>{role.title()}</b> <a href="tg://user?id={user_id}">{user_id}</a>\n\n<b>User:</b> {text}\n<b>Rasa:</b> {response}\n\nIntent: <code>{intent}</code>'
         await self.bot.send_message(self.log_channel_id, log)
@@ -55,9 +57,20 @@ class Rasa:
         if intent in self.actions:
             return f'ACTION -> <b>{intent.upper()}</b>'     
         for response in self.responses:
-            if response['intent'] == intent:
-                responses = response[lang].split('\n')[:-1]
-                return random.choice(responses)        
+            try:
+                result = await self.backend.get_response(intent)
+            except ResponseIsNotCreated:
+                return f'Response not stated'
+            if lang == 'en':
+                responses = result['response_en'].split('- ')
+                responses.pop(0)
+                return random.choice(responses).replace('\r\n', '')
+            else:
+                responses = result['response_ru'].split('- ')
+                responses.pop(0)
+                return random.choice(responses).replace('\r\n', '')
+                
+            # responses = response[lang].split('\n')[:-1]
         return f'Response not stated'
 
     def _detect_language(self, text):

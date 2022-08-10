@@ -11,8 +11,8 @@ class IntentAdmin(DjangoObjectActions, admin.ModelAdmin):
     
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
-        print('Sending requiest to rebuild Rasa')
-        requests.get('http://172.17.0.1:9000/rebuild_rasa')
+        print('Sending request to rebuild Rasa')
+        requests.get(os.environ.get('CONTROLLER_URL') + '/rebuild_rasa')
 
 admin.site.register(models.Intent, IntentAdmin)
 

@@ -9,15 +9,10 @@ class IntentAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ['intent', 'examples']
     list_editable = ['examples']
     
-    def rebuild_rasa(self, request, obj):
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
         print('Sending requiest to rebuild Rasa')
-        response = requests.get('http://172.17.0.1:9000/rebuild_rasa')
-        return response.content
-
-    rebuild_rasa.label = 'Rebuild Rasa'
-    rebuild_rasa.short_description  = 'Press to train new model'
-
-    changelist_actions  = ('rebuild_rasa', )
+        requests.get('http://172.17.0.1:9000/rebuild_rasa')
 
 admin.site.register(models.Intent, IntentAdmin)
 

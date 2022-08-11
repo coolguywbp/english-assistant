@@ -1,3 +1,4 @@
+import asyncio
 from aiogram import Dispatcher, Bot
 from aiogram.types import Message, PreCheckoutQuery, ShippingQuery
 from aiogram.types.message import ContentTypes
@@ -8,8 +9,18 @@ from tgbot.services.payment import Payment
 from tgbot.services.rasa import Rasa
 from tgbot.services.support import Support
 
-async def student_start(m: Message):
-    await m.reply("Hello, student!")
+async def student_start(m: Message, bot: Bot, _):
+    await m.reply(await _('student_greet_1', username = m.from_user.username))
+    await bot.send_chat_action(m.from_user.id, action='TYPING')
+    await asyncio.sleep(5)
+    await m.answer(await _('student_greet_2'))
+    await bot.send_chat_action(m.from_user.id, action='TYPING')
+    await asyncio.sleep(7)
+    await m.answer(await _('student_greet_3'))
+    
+# Dictionary handlers
+async def translate(m: Message):
+    await m.answer("<b>TRANSLATE WIDGET</b>")
 
 async def student_help(m: Message):
     await m.answer("<b>HELP MESSAGE</b>")

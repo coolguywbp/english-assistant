@@ -29,7 +29,7 @@ class Backend:
         self.session = ClientSession()
 
     # Users
-    async def create_user(self, telegram_id, telegram_username=None, first_name=None, last_name=None):
+    async def create_user(self, telegram_id, telegram_username='', first_name='', last_name=''):
         """Create User, make him a Student"""
         params = {'telegram_id': telegram_id, 'telegram_username': telegram_username, 'first_name': first_name, 'last_name': last_name}
         async with self.session.post(self.host + 'users/', params=params) as response:
@@ -59,8 +59,7 @@ class Backend:
             result = await response.json()
         return result
     
-    # Logs
-    
+    # Logs    
     async def save_chatlog(self, telegram_id, action, content) -> None:
         """Save chatlog"""
         params = {'user': telegram_id, 'action': action, 'content': content}
@@ -68,8 +67,7 @@ class Backend:
             result = await response.json()
         return result
 
-    # Responses
-    
+    # Responses    
     async def get_response(self, intent):
         """Get Response via Intent"""
         async with self.session.get(self.host + f'response/{intent}/') as response:
@@ -80,3 +78,11 @@ class Backend:
                 elif result['message'] == "Intent doesn't exist":
                     raise IntentIsNotCreated                    
         return result
+    
+    async def get_message(self, link, lang='ru', **kwargs):
+        async with self.session.get(self.host + f'message/{link}/') as response:
+            result = await response.json()
+        if lang == 'en':
+            return result['message_en'].format(**kwargs)
+        else:
+            return result['message_ru'].format(**kwargs)

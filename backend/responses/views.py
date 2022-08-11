@@ -21,6 +21,25 @@ class ResponseSerializer(serializers.ModelSerializer):
         model = models.Response
         fields = '__all__'
 
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Message
+        fields = '__all__'
+
+class MessageViewSet(viewsets.ModelViewSet):
+    serializer_class = MessageSerializer
+    queryset = models.Message.objects.all()
+    
+    def retrieve(self, request, pk=None):
+        """Получает response, используя intent"""
+        try:
+            message_object = models.Message.objects.all().get(link=pk)
+        except models.Message.DoesNotExist:
+            res = {"code": 404, "message": "Message doesn't exist"}
+            return Response(data=res, status=status.HTTP_404_NOT_FOUND)
+        serialized_message = MessageSerializer(message_object)
+        return Response(serialized_message.data)
+          
 class ChatlogViewSet(viewsets.ModelViewSet):
     serializer_class = ChatlogSerializer
     queryset = models.Chatlog.objects.all()

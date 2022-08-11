@@ -32,9 +32,12 @@ class BackendMiddleware(LifetimeControllerMiddleware):
             text = obj.data
             telegram_id = obj.chat.id
             
+        data["bot"] = self.manager.bot
+        data["backend"] = self.backend
+        data["_"] = self.backend.get_message
+        
         data["role"] = None
         data["user"] = None
-        data["backend"] = self.backend
         
         """Getting User and setting up Role in private chat"""
         if (obj.chat.type == 'private'):

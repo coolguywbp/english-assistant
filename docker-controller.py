@@ -5,6 +5,7 @@ from http.client import HTTPConnection
 
 hostName = "172.17.0.1"
 serverPort = 9000
+externalNme = "englishdevadmin"
 
 backend_url = "localhost:8000"
 
@@ -59,7 +60,10 @@ class MyServer(BaseHTTPRequestHandler):
 if __name__ == "__main__":        
     webServer = HTTPServer((hostName, serverPort), MyServer)
     print(f"Docker Controller started http://{hostName}:{serverPort}")
- 
+    
+    """Прокидываем туннель к админке"""
+    subprocess.Popen(['lt', 'up', '--port', '8000', '--subdomain', externalNme], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    
     try:
         webServer.serve_forever()
     except KeyboardInterrupt:

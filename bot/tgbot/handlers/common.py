@@ -1,4 +1,5 @@
-from aiogram import Dispatcher
+import asyncio
+from aiogram import Dispatcher, Bot
 from aiogram.types import Message
 
 from tgbot.models.role import UserRole

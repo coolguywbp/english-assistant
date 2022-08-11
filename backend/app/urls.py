@@ -27,6 +27,7 @@ router.register(r'calls', calls_views.CallViewSet)
 router.register(r'chatlogs', responses_views.ChatlogViewSet)
 router.register(r'intents', responses_views.IntentViewSet)
 router.register(r'response', responses_views.ResponseViewSet)
+router.register(r'message', responses_views.MessageViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

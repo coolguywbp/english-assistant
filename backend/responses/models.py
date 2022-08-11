@@ -2,6 +2,14 @@ from django.utils import timezone
 from django.db import models
 
 # Create your models here.
+class Message(models.Model):
+    link = models.CharField(verbose_name="Ссылка", unique=True, max_length=100)
+    message_ru = models.TextField(verbose_name="Сообщение(RU)", blank=True)
+    message_en = models.TextField(verbose_name="Сообщение(EN)", blank=True)
+    
+    def __str__(self):
+        return self.link
+    
 class Intent(models.Model):
     intent = models.CharField(verbose_name="Интент", max_length=100)
     examples = models.TextField(verbose_name="Примеры", blank=True)

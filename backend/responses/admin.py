@@ -16,6 +16,11 @@ class IntentAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 admin.site.register(models.Intent, IntentAdmin)
 
+@admin.register(models.Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['link', 'message_ru', 'message_en']
+    list_editable = ['message_ru', 'message_en']
+    
 @admin.register(models.Response)
 class ResponseAdmin(admin.ModelAdmin):
     list_display = ['intent', 'response_ru', 'response_en']

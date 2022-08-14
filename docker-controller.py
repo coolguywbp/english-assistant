@@ -1,7 +1,7 @@
 import subprocess, yaml, json, logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from http.client import HTTPConnection
-"""Микро-сервис, запущенный без docker. Используется для настройки и перезагрузки сервисов."""
+"""Микро-сервис, запущенный без docker. Используется для логгирования, настройки и перезагрузки сервисов."""
 
 hostName = "172.17.0.1"
 serverPort = 9000
@@ -11,6 +11,8 @@ backend_url = "localhost:8000"
 
 logger = logging.getLogger(__name__)
 
+
+# NLU Data
 class AsLiteral(str):
   pass
 
@@ -63,6 +65,9 @@ if __name__ == "__main__":
     
     """Прокидываем туннель к админке"""
     subprocess.Popen(['lt', 'up', '--port', '8000', '--subdomain', externalNme], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    
+    """Запускаем телеграм логгер"""
+    subprocess.Popen(['python3', 'telegram-logger.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     
     try:
         webServer.serve_forever()

@@ -29,9 +29,10 @@ class Backend:
         self.session = ClientSession()
 
     # Users
-    async def create_user(self, telegram_id, telegram_username='', first_name='', last_name=''):
+    async def create_user(self, telegram_id, telegram_username=None, first_name=None, last_name=None):
         """Create User, make him a Student"""
-        params = {'telegram_id': telegram_id, 'telegram_username': telegram_username, 'first_name': first_name, 'last_name': last_name}
+        none_str = lambda i : i or ''
+        params = {'telegram_id': telegram_id, 'telegram_username': none_str(telegram_username), 'first_name': none_str(first_name), 'last_name': none_str(last_name)}
         async with self.session.post(self.host + 'users/', params=params) as response:
             result = await response.json()
         return result

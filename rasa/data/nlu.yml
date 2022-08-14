@@ -1,28 +1,5 @@
 version: '3.1'
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - lets go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
-    - привет
-    - приветствую
-    - салют
-    - хай
-    - здравствуйте
-    - добрый день
-    - добрый вечер
-    - доброе утро
 - intent: goodbye
   examples: |
     - cu
@@ -135,18 +112,6 @@ nlu:
     - как тобой пользоваться
     - мне нужна помощь
     - что мне делать?
-- intent: show_calls
-  examples: |
-    - уроки
-    - хочу посмотреть уроки
-    - посмотреть уроки
-    - покажи уроки
-    - мои уроки
-    - когда мне позвонят?
-    - расписание
-    - моё расписание
-    - когда у меня следующий урок?
-    - сколько звонков сегодня
 - intent: change_teacher
   examples: |
     - cменить учителя
@@ -157,15 +122,6 @@ nlu:
     - i want another teacher
     - another teacher
     - how to change teacher
-- intent: show_plans
-  examples: |
-    - cколько стоит занятие?
-    - cколько длится урок?
-    - хочу оплатить
-    - я могу оплатить картой?
-    - how much does it costs
-    - how to pay
-    - can i pay with card
 - intent: wordpractice
   examples: |
     - повторить слова
@@ -180,12 +136,6 @@ nlu:
     - ничего не работает
     - ничего не получается
     - ничего не понимаю
-- intent: stop_pending_today
-  examples: |
-    - больше не записывать ко мне сегодня
-    - сегодня не записывать
-    - на сегодня хватит записывать
-    - на сегодня больше не записывать
 - intent: affirm
   examples: |
     - 'yes'
@@ -220,6 +170,30 @@ nlu:
     - никогда
     - не зачем
     - не надо
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - lets go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - привет
+    - приветствую
+    - салют
+    - хай
+    - здравствуйте
+    - добрый день
+    - добрый вечер
+    - доброе утро
+    - Првиет
 - intent: working_hours
   examples: |
     - настроить расписание
@@ -243,6 +217,29 @@ nlu:
     - как будет на английском
     - перевод
     - переведи
+- intent: show_calls
+  examples: |
+    - calls
+    - уроки
+    - хочу посмотреть уроки
+    - посмотреть уроки
+    - покажи уроки
+    - мои уроки
+    - когда мне позвонят?
+    - расписание
+    - моё расписание
+    - когда у меня следующий урок?
+    - сколько звонков сегодня
+- intent: show_plans
+  examples: |
+    - cколько стоит занятие?
+    - cколько длится урок?
+    - хочу оплатить
+    - я могу оплатить картой?
+    - how much does it costs
+    - how to pay
+    - can i pay with card
+    - Сколько стоят уроки?
 - intent: day_off
   examples: |
     - отменить уроки
@@ -257,3 +254,23 @@ nlu:
     - завтра беру отгул
     - завтра у меня выходной
     - завтра сплю
+- intent: new_call
+  examples: |
+    - назначить звонок
+    - занятие
+    - новый урок
+    - когда можно позвонить
+    - как мне записаться на урок?
+    - хочу на урок
+    - как начать заниматься
+    - new call
+    - i want a lesson
+    - new lesson
+    - how to have a lesson
+    - how to get a call
+    - I want to have English lesson
+- intent: set_time_zone
+  examples: |
+    - I want to set the time zone
+    - time
+    - timezone

@@ -7,14 +7,13 @@ USER root
 COPY ./data /app/data
 
 # train a new rasa model
-RUN rasa train
+RUN rasa train --data data --out models
 
-VOLUME /app
-VOLUME /app/data
-VOLUME /app/models
+# VOLUME /app
+# VOLUME /app/data
+# VOLUME /app/models
 
-RUN python --version
 # set entrypoint for interactive shells
 ENTRYPOINT ["rasa"]
 # command to run when container is called to run
-CMD ["run", "-m", "/app/models", "--enable-api"]
+CMD ["run", "--enable-api"]

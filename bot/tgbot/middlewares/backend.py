@@ -45,6 +45,9 @@ class BackendMiddleware(LifetimeControllerMiddleware):
                 user = await self.backend.get_user(telegram_id)
             except UserIsNotCreated:
                 """If user is not created, create new student account (yes, inside middleware)"""
+                self.logger.info(telegram_username)
+                self.logger.info(first_name)
+                self.logger.info(last_name)
                 user = await self.backend.create_user(telegram_id, telegram_username=telegram_username, first_name=first_name, last_name=last_name)
             
             # Saving chatlog

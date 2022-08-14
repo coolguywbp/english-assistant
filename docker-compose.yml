@@ -27,8 +27,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5005:5005
-    volumes:
-      - ./rasa:/app
   bot:
     build:
       context: ./bot
